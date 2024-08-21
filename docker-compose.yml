@@ -1,0 +1,37 @@
+services:
+    hoa-webserver:
+        image: hoa-webserver
+        container_name: hoa-webserver
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        depends_on:
+            - hoa-sql-server
+        links:
+            - hoa-sql-server
+        volumes:
+            - .:/var/www/html
+        networks:
+            - hoa-network
+        ports:
+            - "${APP_HOST_PORT}:80"
+    hoa-sql-server:
+        image: postgres:latest
+        container_name: hoa-sql-server
+        volumes:
+            - ./sql_data:/var/lib/postgresql/data
+        networks:
+            - hoa-network
+        environment:
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "${DB_HOST_PORT}:${DB_PORT}"
+
+networks:
+  hoa-network:
+    driver: bridge
+
+volumes:
+    sql_data:
