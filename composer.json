@@ -11,6 +11,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^2.0",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
@@ -47,7 +48,10 @@
         ],
         "tests:unit": "phpunit --testsuite=Unit",
         "tests:integration": "phpunit --testsuite=Integration",
-        "tests:feature": "phpunit --testsuite=Feature"
+        "tests:feature": "phpunit --testsuite=Feature",
+        "analyse:code": "phpstan analyse",
+        "style:fix": "pint -v",
+        "style:dryrun": "pint --test"
     },
     "extra": {
         "laravel": {
