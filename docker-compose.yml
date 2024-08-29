@@ -7,8 +7,10 @@ services:
             dockerfile: docker/Dockerfile
         depends_on:
             - hoa-sql-server
+            - hoa-xr-server
         links:
             - hoa-sql-server
+            - hoa-xr-server
         volumes:
             - .:/var/www/html
         networks:
@@ -28,6 +30,16 @@ services:
             POSTGRES_PASSWORD: ${DB_PASSWORD}
         ports:
             - "${DB_HOST_PORT}:${DB_PORT}"
+    hoa-xr-server:
+        image: hoa-xr-server
+        container_name: hoa-xr-server
+        build:
+            context: .
+            dockerfile: docker/XRDockerfile
+        networks:
+            - hoa-network
+        ports:
+            - "27420:27420"
 
 networks:
   hoa-network:

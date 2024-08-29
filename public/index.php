@@ -12,6 +12,12 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 // Register the Composer autoloader...
 require __DIR__.'/../vendor/autoload.php';
 
+// Register xr on local dev environment
+if (file_exists($xrDebug = __DIR__.'/../xr.php')) {
+    require $xrDebug;
+}
+
+
 // Bootstrap Laravel and handle the request...
 (require_once __DIR__.'/../bootstrap/app.php')
     ->handleRequest(Request::capture());
